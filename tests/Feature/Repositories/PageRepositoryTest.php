@@ -5,17 +5,11 @@ namespace Feature\Repositories;
 use App\Interfaces\Repositories\PageRepositoryInterface;
 use App\Models\Page;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PageRepositoryTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
-
-    public function test_example(): void
-    {
-        $this->assertTrue(true);
-    }
+    use RefreshDatabase;
 
     public function test_it_creates_unique_slugs(): void {
         $pageRepository = app()->get(PageRepositoryInterface::class);
@@ -29,7 +23,7 @@ class PageRepositoryTest extends TestCase
             'slug' => $pageRepository->generateSlug('test', 'test', $testTitle),
         ]);
 
-        $this->assertEquals('/this-is-a-test-title', $page->slug);
+        $this->assertEquals('this-is-a-test-title', $page->slug);
 
         $pageTwo = Page::factory()->create([
             'site' => 'test',
@@ -38,7 +32,7 @@ class PageRepositoryTest extends TestCase
             'slug' => $pageRepository->generateSlug('test', 'test', $testTitle),
         ]);
 
-        $this->assertEquals('/this-is-a-test-title-2', $pageTwo->slug);
+        $this->assertEquals('this-is-a-test-title-2', $pageTwo->slug);
 
         $pageThree = Page::factory()->create([
             'site' => 'test',
@@ -47,7 +41,7 @@ class PageRepositoryTest extends TestCase
             'slug' => $pageRepository->generateSlug('test', 'different_type', $testTitle),
         ]);
 
-        $this->assertEquals('/this-is-a-test-title', $pageThree->slug);
+        $this->assertEquals('this-is-a-test-title', $pageThree->slug);
 
         $pageFour = Page::factory()->create([
             'site' => 'different_site',
@@ -56,6 +50,6 @@ class PageRepositoryTest extends TestCase
             'slug' => $pageRepository->generateSlug('different_site', 'test', $testTitle),
         ]);
 
-        $this->assertEquals('/this-is-a-test-title', $pageFour->slug);
+        $this->assertEquals('this-is-a-test-title', $pageFour->slug);
     }
 }

@@ -37,7 +37,7 @@ class PageRepository implements PageRepositoryInterface
     }
 
     public function generateSlug(string $site, string $pageType, string $title): string {
-        $slug = '/' .strtolower(trim(preg_replace('~[^\pL\d]+~u', '-', $title)));
+        $slug = strtolower(trim(preg_replace('~[^\pL\d]+~u', '-', $title)));
 
         $pageCount = Page::query()
             ->where([
